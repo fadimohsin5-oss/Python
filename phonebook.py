@@ -1,3 +1,50 @@
+import sys  
+def initial_phonebook(): 
+	rows, cols = int(input("Please enter initial number of contacts: ")), 5 
+	phone_book = [] 
+	print(phone_book) 
+	for i in range(rows): 
+		print("\nEnter contact %d details in the following order (ONLY):" % (i+1)) 
+		print("NOTE: * indicates mandatory fields") 
+		print("....................................................................") 
+		temp = [] 
+		for j in range(cols):
+
+			if j == 0: 
+				temp.append(str(input("Enter name*: ")))
+
+				if temp[j] == '' or temp[j] == ' ': 
+					sys.exit( 
+						"Name is a mandatory field. Process exiting due to blank field...") 
+
+			if j == 1: 
+				temp.append(int(input("Enter number*: "))) 
+						
+			if j == 2: 
+				temp.append(str(input("Enter e-mail address: "))) 
+			
+				if temp[j] == '' or temp[j] == ' ': 
+					temp[j] = None
+					
+			if j == 3: 
+				temp.append(str(input("Enter date of birth(dd/mm/yy): "))) 
+				
+				if temp[j] == '' or temp[j] == ' ':
+
+					temp[j] = None
+			if j == 4: 
+				temp.append( 
+					str(input("Enter category(Family/Friends/Work/Others): "))) 
+			
+				if temp[j] == "" or temp[j] == ' ': 
+					temp[j] = None
+					
+		phone_book.append(temp) 
+		
+	
+	print(phone_book) 
+	return phone_book 
+
 def menu():
     print("************************************************")
     print("\t\t\tSMARTPHONE DIRECTORY", flush=False)
@@ -85,3 +132,45 @@ def search_existing(pb):
     else:
         print("invalid search criteria")
         return -1
+
+    if check == -1:
+         return -1
+    else:
+         display_all(temp)
+         return check
+def display_all(pb):
+    if not pb:
+          print("List is empty: []")
+    else:
+        for i in range(len(pb)):
+             print(pb[i])
+def thanks():
+    print("***********************************************************************************************")
+    print("Thank you for using our Smmartphone directory system! Please visit again!")
+    print("***********************************************************************************************")
+    sys.exit("Goodbye, have a nice day!")
+
+
+print("......................................................")
+print("Hello user, welcome to the smartphone directory system")
+print("You may now proceed to explore this directory")
+print("...............................................")
+
+ch = 1
+pb = initial_phonebook()
+while ch in (1,2,3,4,5):
+    ch = menu()
+    if ch ==1:
+        pb = add_contact(pb)
+    elif ch ==2:
+            pb = remove_existing(pb)
+    elif ch ==3:
+                pb = delete_all(pb)
+    elif ch ==4:
+                d = search_existing(pb)
+                if d == -1:
+                    print("The contact does not exist. Please try again.")
+    elif ch == 5:
+        display_all(pb)
+    else:
+         thanks()
